@@ -29,6 +29,13 @@ dependencies {
     testImplementation 'org.projectlombok:lombok:1.18.26'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit:4.13.2'
+
+    implementation 'org.apache.httpcomponents:httpcore:4.4.15'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.14'
+    implementation('org.apache.httpcomponents:httpclient:4.5.14') {
+        exclude(module: 'commons-logging')
+    }
+
 }
 
 tasks.named('test') {

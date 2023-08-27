@@ -1,5 +1,6 @@
 package com.salmon;
 
+import com.salmon.utils.HttpClientUtil;
 import com.salmon.utils.ParseBaiduDictUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -16,9 +17,15 @@ class DictParserApplicationTests {
 
     private static final Logger log = LoggerFactory.getLogger(DictParserApplication.class);
 
+    @Test
+    void testByUrl(){
+        byte[] bytes = HttpClientUtil.download("https://shurufa.baidu.com/dict_innerid_download?innerid=4206105667");
+        List<String> dicts = ParseBaiduDictUtils.parseByString(bytes);
+        log.info("dicts:{}", dicts);
+    }
 
     @Test
-    void contextLoads() throws Exception {
+    void testByFile() throws Exception {
         String path = "dict/china_star.bdict";
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource("classpath:/templates/" + path);
