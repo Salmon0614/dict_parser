@@ -22,7 +22,7 @@ class DictParserApplicationTests {
         String path = "dict/china_star.bdict";
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource("classpath:/templates/" + path);
-        List<String> dicts = ParseBaiduDictUtils.parseData(resource.getFile());
+        List<String> dicts = ParseBaiduDictUtils.parseByFile(resource.getFile());
         log.info("dicts:{}", dicts);
     }
 

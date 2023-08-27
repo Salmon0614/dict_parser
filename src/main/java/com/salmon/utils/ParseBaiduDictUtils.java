@@ -20,13 +20,12 @@ import java.util.List;
 public class ParseBaiduDictUtils {
 
     /**
-     * 解析词库文件(bdict)
+     * 根据词库文件解析(bdict)
      *
      * @param file 读取的文件
      * @return 返回所有词汇
      */
-    public static List<String> parseData(File file) throws Exception {
-        List<String> wordList = new ArrayList<>();
+    public static List<String> parseByFile(File file) throws Exception {
         //存储字节流
         ByteArrayOutputStream dataOut = new ByteArrayOutputStream();
         //读取文件
@@ -34,8 +33,23 @@ public class ParseBaiduDictUtils {
         // 将文件通道中的数据传输到 ByteArrayOutputStream
         fileChannel.transferTo(0, fileChannel.size(), Channels.newChannel(dataOut));
         fileChannel.close();
-        //获取字节数组
-        ByteBuffer dataRawBytes = ByteBuffer.wrap(dataOut.toByteArray());
+        //获取字节数组，并开始解析
+        return parseData(ByteBuffer.wrap(dataOut.toByteArray()));
+
+    }
+
+    /**
+     * 根据词库内容解析(bdict)
+     *
+     * @param bytes 内容
+     * @return 返回所有词汇
+     */
+    public static List<String> parseByString(byte[] bytes) {
+        return parseData(ByteBuffer.wrap(bytes));
+    }
+
+    private static List<String> parseData(ByteBuffer dataRawBytes) {
+        List<String> wordList = new ArrayList<>();
         //设置字节序为小端字节序
         dataRawBytes.order(ByteOrder.LITTLE_ENDIAN);
         byte[] buf = new byte[1024];
@@ -61,5 +75,6 @@ public class ParseBaiduDictUtils {
         }
         return wordList;
     }
+
 
 }
